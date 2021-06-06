@@ -23,3 +23,9 @@
 .btn {
   width: 42%;
 }
+
+@media only screen and (max-width: 768px) {
+  .form {
+    width: 70vw;
+  }
+}
