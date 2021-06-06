@@ -1,0 +1,25 @@
+.form {
+  width: 420px;
+}
+
+.title {
+  width: 100%;
+  margin-bottom: 11px;
+  font-size: 1.75rem;
+  text-align: left;
+}
+
+.inp {
+  width: 100%;
+  margin: 4px 0 !important;
+}
+
+.btnWrap {
+  width: 100%;
+  margin-top: 11px;
+  justify-content: space-evenly !important;
+}
+
+.btn {
+  width: 42%;
+}
