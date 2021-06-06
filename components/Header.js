@@ -13,7 +13,7 @@ export default function Header() {
     <header className={`flex-row ${styles.container}`}>
       <div className={`flex-row ${styles.logo}`} onClick={clickLogo}>
         <MicSVG size='22' />
-        <h1>Karmic</h1>
+        <h1>Kharmic</h1>
       </div>
     </header>
   );
