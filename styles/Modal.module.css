@@ -4,6 +4,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 2;
   display: grid;
   place-items: center;
   background-color: rgba(10, 10, 10, 0.75);
