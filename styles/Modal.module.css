@@ -20,8 +20,8 @@
   height: -moz-fit-content;
   height: fit-content;
   padding: 2rem;
-  background-color: whitesmoke;
-  color: #0a0a0a;
+  background-color: var(--white);
+  color: var(--black);
   border-radius: 11px;
   position: relative;
 }
@@ -32,7 +32,7 @@
   right: 10px;
   background-color: transparent;
   border: none;
-  color: #d44444;
+  color: var(--red);
   font-size: 1.5rem;
   cursor: pointer;
 }
