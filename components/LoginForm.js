@@ -1,4 +1,5 @@
 import styles from "../styles/Form.module.css";
+import btnStyles from "../styles/Buttons.module.css";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/actions/authActions";
@@ -85,10 +86,16 @@ function LoginForm({ toggleLogin }) {
           <CircularProgress />
         ) : (
           <Fragment>
-            <Button variant='contained' className={styles.btn} type='submit'>
+            <Button
+              variant='contained'
+              className={`${styles.btn} ${btnStyles.blueRadient}`}
+              type='submit'>
               Submit
             </Button>
-            <Button variant='outlined' className={styles.btn} onClick={toggleLogin}>
+            <Button
+              variant='outlined'
+              className={`${styles.btn} ${btnStyles.white}`}
+              onClick={toggleLogin}>
               Register
             </Button>
           </Fragment>

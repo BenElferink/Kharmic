@@ -5,20 +5,26 @@
 
 :root {
   --white: rgb(245, 245, 245);
+  --white-ghost: rgba(245, 245, 245, 0.5);
   --black: rgb(10, 10, 10);
   --black-ghost: rgba(10, 10, 10, 0.5);
   --red: rgb(212, 68, 68);
 
   --beige: rgb(255, 241, 242);
   --blue-dark: rgb(74, 57, 115);
-  --blue-dark-ghost: rgba(74, 57, 115, 0.75);
+  --blue-dark-ghost: rgba(74, 57, 115, 0.5);
   --blue-darker: rgb(52, 38, 77);
-  --blue-darker-ghost: rgba(52, 38, 77, 0.75);
+  --blue-darker-ghost: rgba(52, 38, 77, 0.5);
 
   --gradient-blue-right: linear-gradient(to right, var(--blue-dark), var(--blue-darker));
   --gradient-blue-right-2x: linear-gradient(to right, var(--blue-dark) 50%, var(--blue-darker));
   --gradient-blue-left: linear-gradient(to left, var(--blue-dark), var(--blue-darker));
   --gradient-blue-left-2x: linear-gradient(to left, var(--blue-dark) 50%, var(--blue-darker));
+  --gradient-blue-ghost-right: linear-gradient(
+    to right,
+    var(--blue-dark-ghost),
+    var(--blue-darker-ghost)
+  );
 }
 
 * {

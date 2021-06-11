@@ -11,9 +11,22 @@
 }
 .blueRadient:hover,
 .blueRadient:active {
-  background: linear-gradient(
-    to right,
-    var(--blue-dark-ghost),
-    var(--blue-darker-ghost)
-  ) !important;
+  background: var(--gradient-blue-ghost-right) !important;
+}
+
+.white {
+  background: white !important;
+  padding: 0.5em 2em !important;
+  border: none !important;
+  border-radius: 100px !important;
+  color: var(--blue-dark) !important;
+  font-weight: 100 !important;
+  font-size: 1rem !important;
+  text-transform: none !important;
+  cursor: pointer !important;
+}
+.white:hover,
+.white:active {
+  background: var(--gradient-blue-ghost-right) !important;
+  color: var(--white) !important;
 }

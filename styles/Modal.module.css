@@ -20,7 +20,7 @@
   height: -moz-fit-content;
   height: fit-content;
   padding: 2rem;
-  background-color: var(--white);
+  background: var(--beige);
   color: var(--black);
   border-radius: 11px;
   position: relative;
@@ -30,9 +30,10 @@
   position: absolute;
   top: 5px;
   right: 10px;
-  background-color: transparent;
+  background: transparent;
   border: none;
   color: var(--red);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  font-weight: 900;
   cursor: pointer;
 }
