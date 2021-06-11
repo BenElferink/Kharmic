@@ -10,12 +10,12 @@ export default function ToasterNotifications() {
     style: {
       minWidth: "300px",
       padding: "1rem",
-      backgroundColor: "#f5f5f5",
+      backgroundColor: "var(--white)",
       bordeRadius: "4px",
-      color: "#0a0a0a",
+      color: "var(--black)",
       fontSize: "1.1rem",
     },
-    duration: 4000,
+    duration: 3000,
   };
 
   useEffect(() => {
