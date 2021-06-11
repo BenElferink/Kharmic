@@ -53,6 +53,16 @@ function RegisterForm({ toggleLogin }) {
       <h6 className={styles.title}>Register</h6>
 
       <TextField
+        label='Display Name'
+        name='displayName'
+        value={formData["displayName"] ?? ""}
+        onChange={handleChange}
+        required
+        variant='outlined'
+        className={styles.inp}
+      />
+
+      <TextField
         label='Username'
         name='username'
         value={formData["username"] ?? ""}

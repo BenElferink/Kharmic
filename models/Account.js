@@ -4,10 +4,13 @@ const { Schema, model, models } = mongoose;
 
 const Account = new Schema(
   {
+    display_name: {
+      type: String,
+      required: true,
+    },
     username: {
       type: String,
       required: true,
-      lowercase: true,
       unique: true,
     },
     passwordHash: {

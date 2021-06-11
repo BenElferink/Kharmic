@@ -11,14 +11,14 @@ export default async (request, response) => {
     case "POST":
       {
         try {
-          const { username, password, confirmPassword, profession } = request.body;
+          const { displayName, username, password, confirmPassword, profession } = request.body;
 
           // some fields are required
-          if (!username || !password || !confirmPassword) {
+          if (!displayName || !username || !password || !confirmPassword) {
             return response.status(400).json({
               error: true,
               message: "Please enter all required fields",
-              required_fields: ["username", "password", "confirmPassword"],
+              required_fields: ["displayName", "username", "password", "confirmPassword"],
               optional_fields: ["profession"],
             });
           }
@@ -46,6 +46,7 @@ export default async (request, response) => {
 
           // create new user
           const newAccount = await Account.create({
+            display_name: displayName,
             username,
             passwordHash: hash,
             profession: profession ?? "Anonymous",
