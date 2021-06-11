@@ -26,6 +26,8 @@ function InnerApp({ Component, pageProps }) {
   useEffect(() => {
     if (router.pathname !== "/" && !account) {
       router.push("/");
+    } else if (router.pathname === "/" && account) {
+      router.push("/platform");
     }
   }, [router.pathname, account]);
 

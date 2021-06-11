@@ -1,0 +1,19 @@
+.blueRadient {
+  background: var(--gradient-blue-right) !important;
+  padding: 0.5em 2em !important;
+  border: none !important;
+  border-radius: 100px !important;
+  color: var(--white) !important;
+  font-weight: 100 !important;
+  font-size: 1rem !important;
+  text-transform: none !important;
+  cursor: pointer !important;
+}
+.blueRadient:hover,
+.blueRadient:active {
+  background: linear-gradient(
+    to right,
+    var(--blue-dark-ghost),
+    var(--blue-darker-ghost)
+  ) !important;
+}

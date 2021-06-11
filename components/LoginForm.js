@@ -46,7 +46,7 @@ function LoginForm({ toggleLogin }) {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit} className={`flex-column ${styles.form}`}>
+    <form onSubmit={handleSubmit} className={`${styles.form}`}>
       <h6 className={styles.title}>Login</h6>
 
       <TextField
@@ -80,7 +80,7 @@ function LoginForm({ toggleLogin }) {
 
       {auth.error && <ErrorsList errors={[auth.error]} />}
 
-      <div className={`flex-row ${styles.btnWrap}`}>
+      <div className={`${styles.btnWrap}`}>
         {auth.loading ? (
           <CircularProgress />
         ) : (

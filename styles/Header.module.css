@@ -1,25 +1,26 @@
 .container {
+  height: 100px;
   width: 100%;
-  padding: 2rem 1.5rem;
+  padding: 0 1.5rem;
 
-  position: fixed;
+  /* position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 1; */
 
-  background-color: rgba(10, 10, 10, 0.6);
-  color: var(--white);
-  justify-content: space-between !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /* background-color: var(--black-ghost); */
+  /* color: var(--white); */
 }
 
 .logo {
+  display: flex;
+  align-items: center;
   cursor: pointer;
 }
 .logo * {
   font-weight: 100;
-}
-
-.logout {
-  background-color: var(--red) !important;
-  color: var(--white) !important;
 }

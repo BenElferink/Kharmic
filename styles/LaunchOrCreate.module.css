@@ -1,0 +1,63 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.lionArtWrap {
+  flex: 1;
+  background: var(--gradient-blue-right);
+}
+.lionArt {
+  min-height: 300px;
+  background: var(--beige);
+  border-radius: 0 0 100px 0;
+  color: var(--black);
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.lionArt svg {
+  width: 150px;
+  height: 150px;
+  fill: var(--black);
+}
+
+.owlArtWrap {
+  flex: 1;
+  background: var(--beige);
+}
+.owlArt {
+  min-height: 300px;
+  background: var(--gradient-blue-right);
+  border-radius: 100px 0 0 0;
+  color: var(--white);
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.owlArt svg {
+  width: 150px;
+  height: 150px;
+  fill: var(--white);
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .lionArtWrap {
+    background: var(--gradient-blue-left);
+  }
+
+  .lionArt,
+  .owlArt {
+    min-height: 500px;
+  }
+}

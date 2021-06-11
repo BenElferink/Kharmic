@@ -4,9 +4,21 @@
 }
 
 :root {
-  --black: #0a0a0a;
-  --white: #f5f5f5;
-  --red: #d44444;
+  --white: rgb(245, 245, 245);
+  --black: rgb(10, 10, 10);
+  --black-ghost: rgba(10, 10, 10, 0.5);
+  --red: rgb(212, 68, 68);
+
+  --beige: rgb(255, 241, 242);
+  --blue-dark: rgb(74, 57, 115);
+  --blue-dark-ghost: rgba(74, 57, 115, 0.75);
+  --blue-darker: rgb(52, 38, 77);
+  --blue-darker-ghost: rgba(52, 38, 77, 0.75);
+
+  --gradient-blue-right: linear-gradient(to right, var(--blue-dark), var(--blue-darker));
+  --gradient-blue-right-2x: linear-gradient(to right, var(--blue-dark) 50%, var(--blue-darker));
+  --gradient-blue-left: linear-gradient(to left, var(--blue-dark), var(--blue-darker));
+  --gradient-blue-left-2x: linear-gradient(to left, var(--blue-dark) 50%, var(--blue-darker));
 }
 
 * {
@@ -19,8 +31,8 @@ html,
 body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: var(--black);
-  color: var(--white);
+  background-color: var(--beige);
+  color: var(--black);
 }
 
 a {
@@ -28,33 +40,19 @@ a {
   text-decoration: none;
 }
 
-.flex-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+.page {
+  width: 100vw;
+  min-height: 100vh;
 }
 
-.flex-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.temp {
+  width: 100%;
+  height: 30vh;
+  background: var(--gradient-blue-right);
 }
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
-    -webkit-animation-delay: -1ms !important;
-    animation-delay: -1ms !important;
-    -webkit-animation-duration: 1ms !important;
-    animation-duration: 1ms !important;
-    -webkit-animation-iteration-count: 1 !important;
-    animation-iteration-count: 1 !important;
-    background-attachment: initial !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0s !important;
-    transition-delay: 0s !important;
+@media only screen and (min-width: 768px) {
+  .temp {
+    height: 50vh;
+    background: var(--gradient-blue-right-2x);
   }
 }

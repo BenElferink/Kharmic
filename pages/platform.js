@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Header from "../components/Header";
-import styles from "../styles/Pages.module.css";
+import LaunchOrCreate from "../components/LaunchOrCreate";
 
 export default function Platform() {
   return (
-    <div className={styles.container}>
+    <div className={`page`}>
       <Head>
         <title>Platform || Karmic</title>
         <meta name='description' content='Karmic' />
@@ -12,9 +12,8 @@ export default function Platform() {
       </Head>
       <Header />
 
-      <center style={{ marginTop: "18vh", fontSize: "2rem", fontWeight: "100" }}>
-        Under Development
-      </center>
+      <LaunchOrCreate />
+      <div className='temp' />
     </div>
   );
 }

@@ -10,7 +10,7 @@ export default function ToasterNotifications() {
     style: {
       minWidth: "300px",
       padding: "1rem",
-      backgroundColor: "#f5f5f5be",
+      backgroundColor: "#f5f5f5",
       bordeRadius: "4px",
       color: "#0a0a0a",
       fontSize: "1.1rem",
@@ -26,5 +26,5 @@ export default function ToasterNotifications() {
     // eslint-disable-next-line
   }, [txt, type]);
 
-  return <Toaster position='top-right' reverseOrder={true} />;
+  return <Toaster position='top-left' reverseOrder={true} />;
 }
