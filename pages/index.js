@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Header from "../components/Header";
+import LaunchOrCreate from "../components/LaunchOrCreate";
 
 export default function Home() {
   return (
@@ -11,9 +12,8 @@ export default function Home() {
       </Head>
       <Header />
 
-      <center style={{ marginTop: "18vh", fontSize: "2rem", fontWeight: "100" }}>
-        Under Development
-      </center>
+      <LaunchOrCreate />
+      <div className='temp' />
     </div>
   );
 }
