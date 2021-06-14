@@ -39,10 +39,12 @@ function CreateSessionModal({ toggleModal }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    dispatch({ type: "TOAST", payload: { txt: "Under Development", type: "error" } });
+    dispatch({ type: "TOAST", payload: { txt: "Sending payload...", type: "loading" } });
+
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+      dispatch({ type: "TOAST", payload: { txt: "Under Development", type: "error" } });
+    }, 1000);
   };
 
   return (
