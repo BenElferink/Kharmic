@@ -14,18 +14,14 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 
+const defaultDate = `${new Date().getFullYear()}-01-01T00:00`;
+
 function CreateSessionModal({ toggleModal }) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     category: "",
-    date_and_time: new Date(
-      new Date().getFullYear(),
-      new Date().getMonth(),
-      new Date().getDate(),
-      new Date().getHours() + 1,
-      0,
-    ),
+    date_and_time: new Date(defaultDate),
   });
 
   // change input data
@@ -80,7 +76,7 @@ function CreateSessionModal({ toggleModal }) {
           label='Date and Time'
           name='date_and_time'
           type='datetime-local'
-          // value={new Date(formData["date_and_time"]).toISOString().replace(/.\d+Z$/g, "")}
+          defaultValue={defaultDate}
           onChange={handleChange}
           required
           variant='outlined'
