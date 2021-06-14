@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../redux/actions/authActions";
-import Modal from "./Modal";
+import { login } from "../../redux/actions/authActions";
+import Modal from "../Modal";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 
