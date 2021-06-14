@@ -1,4 +1,3 @@
-// import autoPopulate from "mongoose-autopopulate";
 import mongoose from "mongoose";
 const { Schema, model, models } = mongoose;
 
@@ -30,6 +29,5 @@ const Account = new Schema(
     timestamps: true,
   },
 );
-// .plugin(autoPopulate);
 
 export default models.Account ?? model("Account", Account);
