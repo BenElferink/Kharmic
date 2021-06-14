@@ -1,11 +1,12 @@
 import styles from "../styles/Form.module.css";
 import btnStyles from "../styles/Buttons.module.css";
-import { Children, useState } from "react";
+import { Children, Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "../config/axios";
 import { categories } from "../data/categories";
 import Modal from "./Modal";
 import ErrorsList from "../components/ErrorsList";
+import DoneSVG from "../icons/DoneSVG";
 import {
   Button,
   FormControl,
@@ -29,6 +30,7 @@ function CreateSessionModal({ toggleModal }) {
   const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [isDone, setIsDone] = useState(false);
   const [formData, setFormData] = useState({
     category: "",
     category_other: "",
@@ -51,10 +53,9 @@ function CreateSessionModal({ toggleModal }) {
 
     try {
       const response = await Axios(token).post("/api/session/create", formData);
-      console.log(response);
       dispatch({ type: "TOAST", payload: { txt: response.data.message, type: "success" } });
+      setIsDone(true);
     } catch (error) {
-      console.log(error);
       dispatch({ type: "TOAST", payload: { txt: error.message, type: "error" } });
       setErrors([error.response.data.message]);
     }
@@ -67,49 +68,62 @@ function CreateSessionModal({ toggleModal }) {
       <form onSubmit={handleSubmit} className={`${styles.form}`}>
         <h6 className={styles.title}>Create a Session</h6>
 
-        <FormControl required variant='outlined' className={styles.inp}>
-          <InputLabel htmlFor='category'>Category</InputLabel>
-          <Select
-            id='category'
-            name='category'
-            value={formData["category"]}
-            onChange={handleChange}
-            labelWidth={70}>
-            {Children.toArray(categories.map((cat) => <MenuItem value={cat}>{cat}</MenuItem>))}
-          </Select>
-        </FormControl>
+        {isDone ? (
+          <DoneSVG />
+        ) : (
+          <Fragment>
+            <FormControl required variant='outlined' className={styles.inp}>
+              <InputLabel htmlFor='category'>Category</InputLabel>
+              <Select
+                id='category'
+                name='category'
+                value={formData["category"]}
+                onChange={handleChange}
+                labelWidth={70}>
+                {Children.toArray(categories.map((cat) => <MenuItem value={cat}>{cat}</MenuItem>))}
+              </Select>
+            </FormControl>
 
-        {formData["category"] === "Other" && (
-          <TextField
-            label='Other Description'
-            name='category_other'
-            value={formData["category_other"]}
-            onChange={handleChange}
-            required
-            variant='outlined'
-            className={styles.inp}
-          />
+            {formData["category"] === "Other" && (
+              <TextField
+                label='Other Description'
+                name='category_other'
+                value={formData["category_other"]}
+                onChange={handleChange}
+                required
+                variant='outlined'
+                className={styles.inp}
+              />
+            )}
+
+            <TextField
+              label='Date and Time'
+              name='date_and_time'
+              type='datetime-local'
+              defaultValue={defaultDate}
+              onChange={handleChange}
+              required
+              variant='outlined'
+              className={styles.inp}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Fragment>
         )}
-
-        <TextField
-          label='Date and Time'
-          name='date_and_time'
-          type='datetime-local'
-          defaultValue={defaultDate}
-          onChange={handleChange}
-          required
-          variant='outlined'
-          className={styles.inp}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
 
         {errors.length ? <ErrorsList errors={errors} /> : null}
 
         <div className={`${styles.btnWrap}`}>
           {loading ? (
             <CircularProgress />
+          ) : isDone ? (
+            <Button
+              variant='contained'
+              className={`${styles.btn} ${btnStyles.blueRadient}`}
+              onClick={toggleModal}>
+              Close
+            </Button>
           ) : (
             <Button
               variant='contained'
