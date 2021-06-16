@@ -1,0 +1,77 @@
+.container {
+  width: 100%;
+  min-height: 30vh;
+  background: var(--gradient-blue-right);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading {
+  color: var(--blue-light) !important;
+}
+
+.session {
+  width: 85vw;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.session table {
+  width: 75%;
+  border-collapse: collapse;
+}
+.session tr {
+  display: flex;
+  align-items: center;
+}
+.session th,
+.session td {
+  color: var(--beige);
+  text-align: left;
+}
+.session .row1 th,
+.session .row3 td {
+  line-height: 1.5rem;
+  font-weight: 300;
+  font-size: 0.85rem;
+}
+.session .row2 td {
+  line-height: 2rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.session .row3 td {
+  display: flex;
+  align-items: center;
+}
+.session .row3 svg {
+  margin-right: 11px;
+}
+.session th:nth-child(1n),
+.session td:nth-child(1n) {
+  flex: 0.3;
+}
+.session th:nth-child(2n),
+.session td:nth-child(2n) {
+  flex: 0.7;
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    min-height: 50vh;
+    background: var(--gradient-blue-right-2x);
+    flex-direction: row;
+  }
+
+  .sessionsWrapper {
+    flex: 1;
+    margin-left: 50vw;
+  }
+
+  .session {
+    width: 100%;
+  }
+}

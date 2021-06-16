@@ -30,3 +30,16 @@
   background: var(--gradient-blue-ghost-right) !important;
   color: var(--white) !important;
 }
+
+.joinSess {
+  height: 3.5rem !important;
+  background: white !important;
+  color: var(--green-olive) !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+}
+.joinSess:hover,
+.joinSess:active {
+  background: var(--white-ghost) !important;
+  color: var(--white) !important;
+}

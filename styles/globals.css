@@ -9,8 +9,11 @@
   --black: rgb(10, 10, 10);
   --black-ghost: rgba(10, 10, 10, 0.5);
   --red: rgb(212, 68, 68);
-
+  --orange: rgb(246, 192, 142);
   --beige: rgb(255, 241, 242);
+  --green-olive: rgb(133, 141, 106);
+
+  --blue-light: rgb(142, 189, 217);
   --blue-dark: rgb(74, 57, 115);
   --blue-dark-ghost: rgba(74, 57, 115, 0.5);
   --blue-darker: rgb(52, 38, 77);
@@ -49,16 +52,4 @@ a {
 .page {
   width: 100vw;
   min-height: 100vh;
-}
-
-.temp {
-  width: 100%;
-  height: 30vh;
-  background: var(--gradient-blue-right);
-}
-@media only screen and (min-width: 768px) {
-  .temp {
-    height: 50vh;
-    background: var(--gradient-blue-right-2x);
-  }
 }

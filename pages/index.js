@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Header from "../components/Header";
-import LaunchOrCreate from "../components/LaunchOrCreate";
+import CreateOrJoin from "../components/CreateOrJoin";
+import Feed from "../components/Feed";
 
 export default function Home() {
   return (
@@ -12,8 +13,8 @@ export default function Home() {
       </Head>
       <Header />
 
-      <LaunchOrCreate />
-      <div className='temp' />
+      <CreateOrJoin />
+      <Feed />
     </div>
   );
 }

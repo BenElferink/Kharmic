@@ -56,6 +56,7 @@ function CreateSessionModal({ toggleModal }) {
       dispatch({ type: "TOAST", payload: { txt: response.data.message, type: "success" } });
       setIsDone(true);
     } catch (error) {
+      console.error(error.message);
       dispatch({ type: "TOAST", payload: { txt: error.message, type: "error" } });
       setErrors([error.response.data.message]);
     }
