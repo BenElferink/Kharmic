@@ -48,15 +48,15 @@
   align-items: center;
 }
 .session .row3 svg {
-  margin-right: 11px;
+  margin-right: 10px;
 }
 .session th:nth-child(1n),
 .session td:nth-child(1n) {
-  flex: 0.3;
+  flex: 0.25;
 }
 .session th:nth-child(2n),
 .session td:nth-child(2n) {
-  flex: 0.7;
+  flex: 0.75;
 }
 
 @media only screen and (min-width: 768px) {
