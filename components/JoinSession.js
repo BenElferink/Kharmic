@@ -10,9 +10,12 @@ import PeopleAltRoundedIcon from "@material-ui/icons/PeopleAltRounded";
 function JoinSession({ session }) {
   const dispatch = useDispatch();
   const { account, token } = useSelector((state) => state.auth);
-  const isJoined = session.participants.includes(account?._id);
-
   const [loading, setLoading] = useState(false);
+
+  const isJoined = session.participants.includes(account?._id);
+  const notLoggedIn = () => {
+    dispatch({ type: "TOAST", payload: { txt: "Please login", type: "error" } });
+  };
 
   const clickJoin = async () => {
     setLoading(true);
@@ -68,7 +71,7 @@ function JoinSession({ session }) {
       ) : (
         <Button
           className={isJoined ? btnStyles.unjoinSess : btnStyles.joinSess}
-          onClick={clickJoin}>
+          onClick={account ? clickJoin : notLoggedIn}>
           {isJoined ? "EXIT" : "JOIN"}
         </Button>
       )}

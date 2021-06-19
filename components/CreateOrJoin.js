@@ -11,7 +11,7 @@ function CreateOrJoin() {
   const dispatch = useDispatch();
   const { account } = useSelector((state) => state.auth);
   const notLoggedIn = () => {
-    dispatch({ type: "TOAST", payload: { txt: "Please Login", type: "error" } });
+    dispatch({ type: "TOAST", payload: { txt: "Please login", type: "error" } });
   };
 
   const [modal, setModal] = useState(false);
