@@ -34,6 +34,15 @@ export const authReducer = (state = initialState, action) => {
       };
     }
 
+    case "ACCOUNT_UPDATED": {
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        account: action.payload,
+      };
+    }
+
     case "SET_TOKEN": {
       localStorage.setItem("token", action.payload);
       return {

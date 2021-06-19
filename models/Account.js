@@ -8,6 +8,7 @@ const Account = new Schema(
     passwordHash: { type: String, required: true },
     profession: { type: String, default: "Anonymous" },
     karma: { type: Number, default: 0 },
+    sessions: [{ type: Schema.Types.ObjectId, ref: "Session" }],
   },
   {
     timestamps: true,

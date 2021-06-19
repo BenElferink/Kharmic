@@ -32,23 +32,33 @@ export default async (request, response) => {
             });
           }
 
-          // remove account from session-participants
+          // verify is a participant
           if (!foundSession.participants.includes(auth.uid)) {
             return response.status(400).json({
               error: true,
               message: "You are not in this session",
             });
-          } else {
-            foundSession.participants.splice(
-              foundSession.participants.findIndex((accountId) => accountId.equals(auth.uid)),
-              1,
-            );
-            await foundSession.save();
           }
+
+          // remove account from session-participants
+          foundSession.participants.splice(
+            foundSession.participants.findIndex((accountId) => accountId.equals(auth.uid)),
+            1,
+          );
+          await foundSession.save();
+
+          // remove session from account
+          const foundAccount = await Account.findOne({ _id: auth.uid });
+          foundAccount.sessions.splice(
+            foundAccount.sessions.findIndex((sessionId) => sessionId.equals(foundSession._id)),
+            1,
+          );
+          await foundAccount.save();
 
           response.status(200).json({
             message: "Left session",
             session: foundSession,
+            account: foundAccount,
           });
         } catch (error) {
           console.log(error);
