@@ -47,15 +47,17 @@ function Feed() {
             </IconButton>
           </div>
 
-          <h5 className={styles.title}>Booked Sessions</h5>
+          <div className={`scroll ${styles.sessionsWrapper}`}>
+            <h5 className={styles.title}>Booked Sessions</h5>
 
-          {account && account.sessions.length ? (
-            Children.toArray(account.sessions.map((session) => <JoinSession session={session} />))
-          ) : account && !account.sessions.length ? (
-            <span className={styles.noSession}>No sessions here...</span>
-          ) : (
-            <span className={styles.noSession}>Login to view booked sessions</span>
-          )}
+            {account && account.sessions.length ? (
+              Children.toArray(account.sessions.map((session) => <JoinSession session={session} />))
+            ) : account && !account.sessions.length ? (
+              <span className={styles.noSession}>No sessions here...</span>
+            ) : (
+              <span className={styles.noSession}>Login to view booked sessions</span>
+            )}
+          </div>
         </aside>
 
         {/* Join sessions */}

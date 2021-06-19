@@ -28,7 +28,8 @@
 .arrowBtn {
   background: var(--blue-light) !important;
   position: absolute !important;
-  top: 3500% !important;
+  top: 150px !important;
+  z-index: 1;
 }
 .closed {
   left: -95%;
