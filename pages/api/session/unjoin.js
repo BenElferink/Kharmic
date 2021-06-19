@@ -2,6 +2,7 @@ import { initMiddleware } from "../../../middleware/helpers";
 import connectDB from "../../../config/mongodb";
 import { authBearerToken } from "../../../middleware/jsonwebtoken";
 import Session from "../../../models/Session";
+import Account from "../../../models/Account";
 
 initMiddleware(connectDB());
 

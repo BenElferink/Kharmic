@@ -13,6 +13,7 @@ function JoinSession({ session }) {
   const [loading, setLoading] = useState(false);
 
   const isJoined = session.participants.includes(account?._id);
+  const isFull = session.participants.length === 5 && !isJoined;
   const notLoggedIn = () => {
     dispatch({ type: "TOAST", payload: { txt: "Please login", type: "error" } });
   };
@@ -71,8 +72,9 @@ function JoinSession({ session }) {
       ) : (
         <Button
           className={isJoined ? btnStyles.unjoinSess : btnStyles.joinSess}
-          onClick={account ? clickJoin : notLoggedIn}>
-          {isJoined ? "EXIT" : "JOIN"}
+          onClick={account ? clickJoin : notLoggedIn}
+          disabled={isFull}>
+          {isFull ? "FULL" : isJoined ? "EXIT" : "JOIN"}
         </Button>
       )}
     </article>
