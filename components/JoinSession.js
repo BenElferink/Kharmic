@@ -12,8 +12,12 @@ function JoinSession({ session }) {
   const { account, token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
 
+  const timeDiff = Date.now() - new Date(session.date_and_time);
+  const isHost = session.host === account?._id;
+  const isHostAndStart = isHost && timeDiff >= 0;
+  const isHostNoStart = isHost && timeDiff < 0;
   const isJoined = session.participants.includes(account?._id);
-  const isFull = session.participants.length === 5 && !isJoined;
+  const isFull = session.participants.length === 5 && !isJoined && !isHost;
   const notLoggedIn = () => {
     dispatch({ type: "TOAST", payload: { txt: "Please login", type: "error" } });
   };
@@ -21,14 +25,8 @@ function JoinSession({ session }) {
   const clickJoin = async () => {
     setLoading(true);
     dispatch({ type: "TOAST", payload: { txt: "Sending payload...", type: "loading" } });
-    const body = { session_id: session._id };
-
     try {
-      const response = await Axios(token).post(
-        // join/unjoin session
-        isJoined ? "/api/session/unjoin" : "/api/session/join",
-        body,
-      );
+      const response = await Axios(token).post("/api/session/join", { session_id: session._id });
       dispatch({ type: "SESSION_UPDATED", payload: response.data.session });
       dispatch({ type: "ACCOUNT_UPDATED", payload: response.data.account });
       dispatch({ type: "TOAST", payload: { txt: response.data.message, type: "success" } });
@@ -40,8 +38,34 @@ function JoinSession({ session }) {
         dispatch({ type: "TOAST", payload: { txt: error.message, type: "error" } });
       }
     }
-
     setLoading(false);
+  };
+
+  const clickUnjoin = async () => {
+    setLoading(true);
+    dispatch({ type: "TOAST", payload: { txt: "Sending payload...", type: "loading" } });
+    try {
+      const response = await Axios(token).post("/api/session/unjoin", { session_id: session._id });
+      dispatch({ type: "SESSION_UPDATED", payload: response.data.session });
+      dispatch({ type: "ACCOUNT_UPDATED", payload: response.data.account });
+      dispatch({ type: "TOAST", payload: { txt: response.data.message, type: "success" } });
+    } catch (error) {
+      console.error(error.message);
+      if (error?.response?.data?.error) {
+        dispatch({ type: "TOAST", payload: { txt: error.response.data.message, type: "error" } });
+      } else {
+        dispatch({ type: "TOAST", payload: { txt: error.message, type: "error" } });
+      }
+    }
+    setLoading(false);
+  };
+
+  const clickHostStart = () => {
+    dispatch({ type: "TOAST", payload: { txt: "Under development", type: "error" } });
+  };
+
+  const clickHostKill = () => {
+    dispatch({ type: "TOAST", payload: { txt: "Under development", type: "error" } });
   };
 
   return (
@@ -67,14 +91,28 @@ function JoinSession({ session }) {
           </tr>
         </tbody>
       </table>
+
       {loading ? (
         <CircularProgress color='secondary' />
+      ) : isFull ? (
+        <Button className={btnStyles.joinSess} onClick={() => null} disabled={true}>
+          FULL
+        </Button>
+      ) : isHostAndStart ? (
+        <Button className={btnStyles.joinSess} onClick={account ? clickHostStart : notLoggedIn}>
+          START
+        </Button>
+      ) : isHostNoStart ? (
+        <Button className={btnStyles.unjoinSess} onClick={account ? clickHostKill : notLoggedIn}>
+          KILL
+        </Button>
+      ) : isJoined ? (
+        <Button className={btnStyles.unjoinSess} onClick={account ? clickUnjoin : notLoggedIn}>
+          EXIT
+        </Button>
       ) : (
-        <Button
-          className={isJoined ? btnStyles.unjoinSess : btnStyles.joinSess}
-          onClick={account ? clickJoin : notLoggedIn}
-          disabled={isFull}>
-          {isFull ? "FULL" : isJoined ? "EXIT" : "JOIN"}
+        <Button className={btnStyles.joinSess} onClick={account ? clickJoin : notLoggedIn}>
+          JOIN
         </Button>
       )}
     </article>

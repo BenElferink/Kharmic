@@ -2,6 +2,7 @@ import { initMiddleware } from "../../../middleware/helpers";
 import connectDB from "../../../config/mongodb";
 import { authBearerToken } from "../../../middleware/jsonwebtoken";
 import Session from "../../../models/Session";
+import Account from "../../../models/Account";
 
 initMiddleware(connectDB());
 
@@ -49,9 +50,17 @@ export default async (request, response) => {
             host: auth.uid,
           });
 
+          // add session to account
+          let foundAccount = await Account.findOne({ _id: auth.uid });
+          foundAccount.sessions.push(newSession._id);
+          await foundAccount.save();
+          // populate sessions
+          foundAccount = await Account.populate(foundAccount, { path: "sessions" });
+
           response.status(201).json({
             message: "Created session",
             session: newSession,
+            account: foundAccount,
           });
         } catch (error) {
           console.log(error);

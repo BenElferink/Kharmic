@@ -55,6 +55,8 @@ export default async (request, response) => {
             1,
           );
           await foundAccount.save();
+          // populate sessions
+          foundAccount = await Account.populate(foundAccount, { path: "sessions" });
 
           response.status(200).json({
             message: "Left session",

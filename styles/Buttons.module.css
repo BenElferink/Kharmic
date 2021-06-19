@@ -31,27 +31,24 @@
   color: var(--white) !important;
 }
 
-.joinSess {
+.joinSess,
+.unjoinSess {
   height: 3.5rem !important;
+  width: 4rem !important;
   background: white !important;
-  color: var(--green-olive) !important;
   font-weight: 700 !important;
   font-size: 1rem !important;
 }
 .joinSess:hover,
-.joinSess:active {
-  background: var(--white-ghost) !important;
-  color: var(--white) !important;
-}
-.unjoinSess {
-  height: 3.5rem !important;
-  background: white !important;
-  color: var(--red) !important;
-  font-weight: 700 !important;
-  font-size: 1rem !important;
-}
+.joinSess:active,
 .unjoinSess:hover,
 .unjoinSess:active {
   background: var(--white-ghost) !important;
   color: var(--white) !important;
+}
+.joinSess {
+  color: var(--green-olive) !important;
+}
+.unjoinSess {
+  color: var(--red) !important;
 }

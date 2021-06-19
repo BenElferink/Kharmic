@@ -2,6 +2,45 @@
   width: 100%;
   min-height: 30vh;
   background: var(--gradient-blue-right);
+  display: flex;
+  flex-direction: column;
+}
+
+.sideElem {
+  height: 75vh;
+  width: 95vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--gradient-blue-left);
+  border-radius: 0 30px 30px 0;
+  box-shadow: 0 0 3px 1px var(--blue-light);
+  position: fixed;
+  top: 10vh;
+  z-index: 1;
+  transition: all 0.4s;
+}
+.arrowBtnWrap {
+  height: 1vh;
+  width: 95vw;
+  position: relative;
+}
+.arrowBtn {
+  background: var(--blue-light) !important;
+  position: absolute !important;
+  top: 3500% !important;
+}
+.closed {
+  left: -95%;
+}
+.closed .arrowBtn {
+  right: -10% !important;
+}
+.open {
+  left: 0;
+}
+.open .arrowBtn {
+  right: -7% !important;
 }
 
 .sessionsWrapper {
@@ -11,14 +50,15 @@
 }
 
 .title {
+  margin-top: 20px;
   color: var(--beige);
   font-size: 1.7rem;
   font-weight: 500;
 }
 
-.notSession {
+.noSession {
+  margin-top: 20px;
   color: var(--beige);
-  margin-top: 14px;
 }
 
 .session {
@@ -73,14 +113,22 @@
   .container {
     min-height: 42vh;
     background: var(--gradient-blue-right-2x);
+    flex-direction: row;
+    justify-content: space-around;
   }
 
   .sessionsWrapper {
     flex: 1;
-    margin-left: 50vw;
   }
 
   .session {
     width: 100%;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .bookedWrapper,
+  .sessionsWrapper {
+    flex: 0.33;
   }
 }

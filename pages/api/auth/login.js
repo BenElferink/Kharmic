@@ -23,8 +23,9 @@ export default async (request, response) => {
           }
 
           // verify username exists
-          const accountExists = await Account.findOne({ username });
-          if (!accountExists) {
+          const foundAccount = await Account.findOne({ username }).populate("sessions");
+          console.log(foundAccount);
+          if (!foundAccount) {
             return response.status(400).json({
               error: true,
               message: "Bad credentials",
@@ -32,7 +33,7 @@ export default async (request, response) => {
           }
 
           // verify password
-          const verifiedPass = await bcrypt.compare(password, accountExists.passwordHash);
+          const verifiedPass = await bcrypt.compare(password, foundAccount.passwordHash);
           if (!verifiedPass) {
             return response.status(400).json({
               error: true,
@@ -41,11 +42,11 @@ export default async (request, response) => {
           }
 
           // generate token
-          const token = signToken(accountExists._id);
+          const token = signToken(foundAccount._id);
 
           response.status(200).json({
             message: "Signed in",
-            account: accountExists,
+            account: foundAccount,
             token,
           });
         } catch (error) {
@@ -65,7 +66,7 @@ export default async (request, response) => {
           if (authError) return response.status(401).json({ error: true, message: authError });
 
           // verify username exists
-          const foundAccount = await Account.findOne({ _id: auth.uid });
+          const foundAccount = await Account.findOne({ _id: auth.uid }).populate("sessions");
           if (!foundAccount) {
             return response.status(404).json({
               error: true,

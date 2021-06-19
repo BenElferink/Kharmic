@@ -65,6 +65,8 @@ export default async (request, response) => {
           const foundAccount = await Account.findOne({ _id: auth.uid });
           foundAccount.sessions.push(foundSession._id);
           await foundAccount.save();
+          // populate sessions
+          foundAccount = await Account.populate(foundAccount, { path: "sessions" });
 
           response.status(200).json({
             message: "Joined session",
