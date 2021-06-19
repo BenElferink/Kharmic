@@ -10,6 +10,17 @@
   align-items: center;
 }
 
+.title {
+  color: var(--beige);
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+.notSession {
+  color: var(--beige);
+  margin-top: 14px;
+}
+
 .session {
   width: 90vw;
   margin: 20px auto;

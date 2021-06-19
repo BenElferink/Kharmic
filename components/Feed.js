@@ -30,10 +30,20 @@ function Feed() {
 
   return (
     <main className={styles.container}>
+      {/* TBA */}
+      {/* Booked sessions */}
+
       <div className={styles.sessionsWrapper}>
-        <h5 style={{ color: "#fff", fontSize: "1.7rem", fontWeight: "500" }}>Search/Title TBA</h5>
+        <h5 className={styles.title}>Search/Title TBA</h5>
+
         {loading ? (
-          <CircularProgress color='secondary' size={69} thickness={2} />
+          <div className={styles.notSession}>
+            <CircularProgress color='secondary' size={69} thickness={2} />
+          </div>
+        ) : !feed.length ? (
+          <div className={styles.notSession}>
+            <span>No sessions here...</span>
+          </div>
         ) : (
           Children.toArray(feed.map((session) => <JoinSession session={session} />))
         )}
