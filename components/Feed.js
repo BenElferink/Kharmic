@@ -1,52 +1,29 @@
 import styles from "../styles/Feed.module.css";
 import btnStyles from "../styles/Buttons.module.css";
 import { Children, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import Axios from "../config/axios";
 import { Button, CircularProgress } from "@material-ui/core";
 import PeopleAltRoundedIcon from "@material-ui/icons/PeopleAltRounded";
 
-const FAKE = [
-  {
-    participants: [],
-    category: "Business Advice",
-    category_other: "",
-    date_and_time: "2021-06-16T06:00:00.000+00:00",
-  },
-  {
-    participants: [],
-    category: "Other",
-    category_other: "Cryptocurrencies",
-    date_and_time: "2021-06-16T04:20:00.000+00:00",
-  },
-  {
-    participants: [],
-    category: "Relationships",
-    category_other: "",
-    date_and_time: "2021-06-16T11:00:00.000+00:00",
-  },
-  {
-    participants: [],
-    category: "Ideas",
-    category_other: "",
-    date_and_time: "2021-06-16T11:30:00.000+00:00",
-  },
-];
-
 function Feed() {
-  const [loading, setLoading] = useState(false);
-  const [feed, setFeed] = useState([...FAKE]);
+  const dispatch = useDispatch();
+  const { loading, feed } = useSelector((state) => state.feed);
 
-  const fetchFeed = async (e) => {
-    setLoading(true);
+  const fetchFeed = async () => {
+    dispatch({ type: "FEED_LOADING" });
     try {
       const response = await Axios().get("/api/feed");
-      setFeed((prev) => [...prev, ...response.data.feed]);
+      dispatch({ type: "FEED_FETCHED", payload: response.data.feed });
     } catch (error) {
       console.error(error.message);
+      if (error?.response?.data?.error) {
+        dispatch({ type: "TOAST", payload: { txt: error.response.data.message, type: "error" } });
+      } else {
+        dispatch({ type: "TOAST", payload: { txt: error.message, type: "error" } });
+      }
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -56,8 +33,9 @@ function Feed() {
   return (
     <main className={styles.container}>
       <div className={styles.sessionsWrapper}>
+        <h5 style={{ color: "#fff", fontSize: "1.7rem", fontWeight: "500" }}>Search/Title TBA</h5>
         {loading ? (
-          <CircularProgress className={styles.loading} size={69} thickness={2} />
+          <CircularProgress color='secondary' size={69} thickness={2} />
         ) : (
           Children.toArray(feed.map((session) => <JoinSession session={session} />))
         )}
@@ -68,10 +46,34 @@ function Feed() {
 
 function JoinSession({ session }) {
   const dispatch = useDispatch();
-  // const { token } = useSelector((state) => state.auth);
+  const { account, token } = useSelector((state) => state.auth);
+  const isJoined = session.participants.includes(account?._id);
 
-  const clickJoin = () => {
-    dispatch({ type: "TOAST", payload: { txt: "Under Development", type: "error" } });
+  const [loading, setLoading] = useState(false);
+
+  const clickJoin = async () => {
+    setLoading(true);
+    dispatch({ type: "TOAST", payload: { txt: "Sending payload...", type: "loading" } });
+    const body = { session_id: session._id };
+
+    try {
+      const response = await Axios(token).post(
+        // join/unjoin session
+        isJoined ? "/api/session/unjoin" : "/api/session/join",
+        body,
+      );
+      dispatch({ type: "SESSION_UPDATED", payload: response.data.session });
+      dispatch({ type: "TOAST", payload: { txt: response.data.message, type: "success" } });
+    } catch (error) {
+      console.error(error.message);
+      if (error?.response?.data?.error) {
+        dispatch({ type: "TOAST", payload: { txt: error.response.data.message, type: "error" } });
+      } else {
+        dispatch({ type: "TOAST", payload: { txt: error.message, type: "error" } });
+      }
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -97,9 +99,15 @@ function JoinSession({ session }) {
           </tr>
         </tbody>
       </table>
-      <Button className={btnStyles.joinSess} onClick={clickJoin}>
-        Join
-      </Button>
+      {loading ? (
+        <CircularProgress color='secondary' />
+      ) : (
+        <Button
+          className={isJoined ? btnStyles.unjoinSess : btnStyles.joinSess}
+          onClick={clickJoin}>
+          {isJoined ? "EXIT" : "JOIN"}
+        </Button>
+      )}
     </article>
   );
 }

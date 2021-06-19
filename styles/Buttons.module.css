@@ -43,3 +43,15 @@
   background: var(--white-ghost) !important;
   color: var(--white) !important;
 }
+.unjoinSess {
+  height: 3.5rem !important;
+  background: white !important;
+  color: var(--red) !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+}
+.unjoinSess:hover,
+.unjoinSess:active {
+  background: var(--white-ghost) !important;
+  color: var(--white) !important;
+}

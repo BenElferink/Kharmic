@@ -2,17 +2,16 @@
   width: 100%;
   min-height: 30vh;
   background: var(--gradient-blue-right);
+}
+
+.sessionsWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.loading {
-  color: var(--blue-light) !important;
-}
-
 .session {
-  width: 85vw;
+  width: 90vw;
   margin: 20px auto;
   display: flex;
   align-items: center;
@@ -61,9 +60,8 @@
 
 @media only screen and (min-width: 768px) {
   .container {
-    min-height: 50vh;
+    min-height: 42vh;
     background: var(--gradient-blue-right-2x);
-    flex-direction: row;
   }
 
   .sessionsWrapper {

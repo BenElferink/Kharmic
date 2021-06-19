@@ -53,6 +53,7 @@ function CreateSessionModal({ toggleModal }) {
 
     try {
       const response = await Axios(token).post("/api/session/create", formData);
+      dispatch({ type: "SESSION_CREATED", payload: response.data.session });
       dispatch({ type: "TOAST", payload: { txt: response.data.message, type: "success" } });
       setIsDone(true);
     } catch (error) {

@@ -15,8 +15,9 @@ export const register = (body) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: "LOGOUT" });
     dispatch({ type: "TOAST", payload: { txt: error.message, type: "error" } });
-    if (error?.response?.data?.error)
+    if (error?.response?.data?.error) {
       dispatch({ type: "AUTH_ERROR", error: error.response.data.message });
+    }
   }
 };
 
@@ -37,8 +38,9 @@ export const login = (body) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({ type: "LOGOUT" });
     dispatch({ type: "TOAST", payload: { txt: error.message, type: "error" } });
-    if (error?.response?.data?.error)
+    if (error?.response?.data?.error) {
       dispatch({ type: "AUTH_ERROR", error: error.response.data.message });
+    }
   }
 };
 
