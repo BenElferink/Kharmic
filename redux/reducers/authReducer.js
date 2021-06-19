@@ -29,8 +29,8 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: false,
-        account: action.payload.account ?? state.account,
-        token: action.payload.token ?? state.token,
+        account: action.payload.account,
+        token: action.payload.token,
       };
     }
 
