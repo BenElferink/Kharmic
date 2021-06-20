@@ -11,12 +11,12 @@ function JoinSession({ session }) {
   const dispatch = useDispatch();
   const { account, token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
+  const body = { session_id: session._id };
 
   const timeDiff = Date.now() - new Date(session.date_and_time);
   const isHost = session.host === account?._id;
-  const isHostAndStart = isHost && timeDiff >= 0;
-  const isHostNoStart = isHost && timeDiff < 0;
   const isJoined = session.participants.includes(account?._id);
+  const isStart = timeDiff >= 0 && (isJoined || isHost);
   const isFull = session.participants.length === 5 && !isJoined && !isHost;
   const notLoggedIn = () => {
     dispatch({ type: "TOAST", payload: { txt: "Please login", type: "error" } });
@@ -26,7 +26,7 @@ function JoinSession({ session }) {
     setLoading(true);
     dispatch({ type: "TOAST", payload: { txt: "Sending payload...", type: "loading" } });
     try {
-      const response = await Axios(token).post("/api/session/join", { session_id: session._id });
+      const response = await Axios(token).post("/api/session/join", body);
       dispatch({ type: "SESSION_UPDATED", payload: response.data.session });
       dispatch({ type: "ACCOUNT_UPDATED", payload: response.data.account });
       dispatch({ type: "TOAST", payload: { txt: response.data.message, type: "success" } });
@@ -45,7 +45,7 @@ function JoinSession({ session }) {
     setLoading(true);
     dispatch({ type: "TOAST", payload: { txt: "Sending payload...", type: "loading" } });
     try {
-      const response = await Axios(token).post("/api/session/unjoin", { session_id: session._id });
+      const response = await Axios(token).post("/api/session/unjoin", body);
       dispatch({ type: "SESSION_UPDATED", payload: response.data.session });
       dispatch({ type: "ACCOUNT_UPDATED", payload: response.data.account });
       dispatch({ type: "TOAST", payload: { txt: response.data.message, type: "success" } });
@@ -60,11 +60,26 @@ function JoinSession({ session }) {
     setLoading(false);
   };
 
-  const clickHostStart = () => {
-    dispatch({ type: "TOAST", payload: { txt: "Under development", type: "error" } });
+  const clickHostKill = async () => {
+    setLoading(true);
+    dispatch({ type: "TOAST", payload: { txt: "Sending payload...", type: "loading" } });
+    try {
+      const response = await Axios(token).post("/api/session/uncreate", body);
+      dispatch({ type: "SESSION_DELETED", payload: response.data.sessionId });
+      dispatch({ type: "ACCOUNT_UPDATED", payload: response.data.account });
+      dispatch({ type: "TOAST", payload: { txt: response.data.message, type: "success" } });
+    } catch (error) {
+      console.error(error.message);
+      if (error?.response?.data?.error) {
+        dispatch({ type: "TOAST", payload: { txt: error.response.data.message, type: "error" } });
+      } else {
+        dispatch({ type: "TOAST", payload: { txt: error.message, type: "error" } });
+      }
+    }
+    setLoading(false);
   };
 
-  const clickHostKill = () => {
+  const clickStart = () => {
     dispatch({ type: "TOAST", payload: { txt: "Under development", type: "error" } });
   };
 
@@ -95,19 +110,19 @@ function JoinSession({ session }) {
       {loading ? (
         <CircularProgress color='secondary' />
       ) : isFull ? (
-        <Button className={btnStyles.joinSess} onClick={() => null} disabled={true}>
+        <Button className={btnStyles.joinSess} disabled={true}>
           FULL
         </Button>
-      ) : isHostAndStart ? (
-        <Button className={btnStyles.joinSess} onClick={account ? clickHostStart : notLoggedIn}>
+      ) : isStart ? (
+        <Button className={btnStyles.joinSess} onClick={clickStart}>
           START
         </Button>
-      ) : isHostNoStart ? (
-        <Button className={btnStyles.unjoinSess} onClick={account ? clickHostKill : notLoggedIn}>
+      ) : isHost ? (
+        <Button className={btnStyles.unjoinSess} onClick={clickHostKill}>
           KILL
         </Button>
       ) : isJoined ? (
-        <Button className={btnStyles.unjoinSess} onClick={account ? clickUnjoin : notLoggedIn}>
+        <Button className={btnStyles.unjoinSess} onClick={clickUnjoin}>
           EXIT
         </Button>
       ) : (

@@ -46,6 +46,20 @@ export const feedReducer = (state = initialState, action) => {
       };
     }
 
+    case "SESSION_DELETED": {
+      let copyOfFeed = [...state.feed];
+      copyOfFeed.splice(
+        copyOfFeed.findIndex((session) => session._id == action.payload),
+        1,
+      );
+
+      return {
+        ...state,
+        loading: false,
+        feed: copyOfFeed,
+      };
+    }
+
     default: {
       return state;
     }
