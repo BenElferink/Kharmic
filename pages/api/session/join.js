@@ -62,7 +62,7 @@ export default async (request, response) => {
           await foundSession.save();
 
           // add session to account
-          const foundAccount = await Account.findOne({ _id: auth.uid });
+          let foundAccount = await Account.findOne({ _id: auth.uid });
           foundAccount.sessions.push(foundSession._id);
           await foundAccount.save();
           // populate sessions

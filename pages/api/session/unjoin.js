@@ -49,7 +49,7 @@ export default async (request, response) => {
           await foundSession.save();
 
           // remove session from account
-          const foundAccount = await Account.findOne({ _id: auth.uid });
+          let foundAccount = await Account.findOne({ _id: auth.uid });
           foundAccount.sessions.splice(
             foundAccount.sessions.findIndex((sessionId) => sessionId.equals(foundSession._id)),
             1,
