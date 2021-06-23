@@ -14,14 +14,14 @@ export default async (request, response) => {
           const { auth, authError } = authBearerToken(request);
           if (authError) return response.status(401).json({ error: true, message: authError });
 
-          const { category, category_other, date_and_time } = request.body;
+          const { main_category, sub_category, date_and_time } = request.body;
 
           // some fields are required
-          if (!category || !date_and_time) {
+          if (!main_category || !sub_category || !date_and_time) {
             return response.status(400).json({
               error: true,
               message: "Please enter all required fields",
-              required_fields: ["category", "date_and_time"],
+              required_fields: ["main_category", "sub_category", "date_and_time"],
             });
           }
 
@@ -44,8 +44,8 @@ export default async (request, response) => {
 
           // create the session
           const newSession = await Session.create({
-            category,
-            category_other,
+            main_category,
+            sub_category,
             date_and_time,
             host: auth.uid,
           });

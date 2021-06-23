@@ -95,14 +95,14 @@ function JoinSession({ session }) {
         <tbody>
           <tr className={styles.row2}>
             <td>{moment(new Date(session.date_and_time)).format("H:mm")}</td>
-            <td>{session.category}</td>
+            <td>{session.main_category}</td>
           </tr>
           <tr className={styles.row3}>
             <td>
               <PeopleAltRoundedIcon fontSize='small' />
               {session.participants.length + 1}/6
             </td>
-            <td> {session.category === "Other" ? session.category_other : ""}</td>
+            <td>{session.sub_category}</td>
           </tr>
         </tbody>
       </table>

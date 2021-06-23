@@ -32,16 +32,23 @@ function CreateSessionModal({ toggleModal }) {
   const [errors, setErrors] = useState([]);
   const [isDone, setIsDone] = useState(false);
   const [formData, setFormData] = useState({
-    category: "",
-    category_other: "",
+    main_category: "",
+    sub_category: "",
+    other_category: "",
     date_and_time: new Date(defaultDate),
   });
+
+  const mainCat = categories[categories.findIndex((cat) => cat.main === formData["main_category"])];
 
   // change input data
   const handleChange = (e) => {
     const name = e.target.name;
     let value = e.target.value;
+
     if (name === "date_and_time") value = new Date(value);
+    else if (name === "main_category")
+      return setFormData((prev) => ({ ...prev, [name]: value, sub_category: "" }));
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -76,28 +83,44 @@ function CreateSessionModal({ toggleModal }) {
         ) : (
           <Fragment>
             <FormControl required variant='outlined' className={styles.inp}>
-              <InputLabel htmlFor='category'>Category</InputLabel>
+              <InputLabel htmlFor='main_category'>Main Category</InputLabel>
               <Select
-                id='category'
-                name='category'
-                value={formData["category"]}
+                id='main_category'
+                name='main_category'
+                value={formData["main_category"]}
                 onChange={handleChange}
-                labelWidth={70}>
-                {Children.toArray(categories.map((cat) => <MenuItem value={cat}>{cat}</MenuItem>))}
+                labelWidth={111}>
+                {Children.toArray(
+                  categories.map((cat) => <MenuItem value={cat.main}>{cat.main}</MenuItem>),
+                )}
               </Select>
             </FormControl>
 
-            {formData["category"] === "Other" && (
+            {formData["main_category"] && mainCat.sub.length ? (
+              <FormControl required variant='outlined' className={styles.inp}>
+                <InputLabel htmlFor='sub_category'>Sub Category</InputLabel>
+                <Select
+                  id='sub_category'
+                  name='sub_category'
+                  value={formData["sub_category"]}
+                  onChange={handleChange}
+                  labelWidth={111}>
+                  {Children.toArray(
+                    mainCat.sub.map((subCat) => <MenuItem value={subCat}>{subCat}</MenuItem>),
+                  )}
+                </Select>
+              </FormControl>
+            ) : formData["main_category"] && !mainCat.sub.length ? (
               <TextField
-                label='Other Description'
-                name='category_other'
-                value={formData["category_other"]}
+                label='Sub Category'
+                name='sub_category'
+                value={formData["sub_category"]}
                 onChange={handleChange}
                 required
                 variant='outlined'
                 className={styles.inp}
               />
-            )}
+            ) : null}
 
             <TextField
               label='Date and Time'
