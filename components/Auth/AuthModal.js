@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../redux/actions/authActions";
+import { useSelector } from "react-redux";
 import Modal from "../Modal";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 
 function AuthModal({ toggleModal }) {
-  const dispatch = useDispatch();
-  const { account, token, loading } = useSelector((state) => state.auth);
+  const { account, loading } = useSelector((state) => state.auth);
   const [isLogin, setIsLogin] = useState(true);
 
   const toggleLogin = () => {
@@ -15,14 +13,9 @@ function AuthModal({ toggleModal }) {
   };
 
   useEffect(() => {
-    if (account && !loading) {
-      // go to main app
-      toggleModal();
-    } else if (token && !loading) {
-      // try to login
-      dispatch(login());
-    }
-  }, [account, token, loading]);
+    // go to main app when logged in
+    if (account && !loading) toggleModal();
+  }, [account, loading]);
 
   return (
     <Modal clickClose={toggleModal}>
