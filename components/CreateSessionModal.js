@@ -117,6 +117,7 @@ function CreateSessionModal({ toggleModal }) {
                 value={formData["sub_category"]}
                 onChange={handleChange}
                 required
+                inputProps={{ maxLength: 25 }}
                 variant='outlined'
                 className={styles.inp}
               />
