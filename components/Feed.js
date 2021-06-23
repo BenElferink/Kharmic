@@ -55,10 +55,10 @@ function Feed() {
     (sess) => new Date(sess.date_and_time).toDateString() === search,
   );
 
-  if (isMobile) {
-    return (
-      <main className={styles.container}>
-        {/* Booked sessions - Mobile */}
+  return (
+    <main className={styles.container}>
+      {isMobile ? (
+        // Booked sessions - Mobile
         <aside
           className={`${styles.sideElem} ${isOpen ? styles.open : !isOpen ? styles.closed : ""}`}>
           <div className={styles.arrowBtnWrap}>
@@ -79,41 +79,20 @@ function Feed() {
             )}
           </div>
         </aside>
-
-        {/* Join sessions */}
+      ) : (
+        // Booked sessions - Desktop
         <div className={styles.sessionsWrapper}>
-          <FormControl className={styles.search}>
-            <Select value={search} onChange={(e) => setSearch(e.target.value)}>
-              {Children.toArray(searchOptions.map((x) => <MenuItem value={x}>{x}</MenuItem>))}
-            </Select>
-          </FormControl>
+          <h5 className={styles.title}>Booked Sessions</h5>
 
-          {loading ? (
-            <CircularProgress color='secondary' size={69} thickness={2} />
-          ) : !filteredFeed.length ? (
+          {account && account.sessions.length ? (
+            Children.toArray(account.sessions.map((session) => <JoinSession session={session} />))
+          ) : account && !account.sessions.length ? (
             <span className={styles.noSession}>No sessions here...</span>
           ) : (
-            Children.toArray(filteredFeed.map((sess) => <JoinSession session={sess} />))
+            <span className={styles.noSession}>Login to view booked sessions</span>
           )}
         </div>
-      </main>
-    );
-  }
-
-  return (
-    <main className={styles.container}>
-      {/* Booked sessions - Desktop */}
-      <div className={styles.sessionsWrapper}>
-        <h5 className={styles.title}>Booked Sessions</h5>
-
-        {account && account.sessions.length ? (
-          Children.toArray(account.sessions.map((session) => <JoinSession session={session} />))
-        ) : account && !account.sessions.length ? (
-          <span className={styles.noSession}>No sessions here...</span>
-        ) : (
-          <span className={styles.noSession}>Login to view booked sessions</span>
-        )}
-      </div>
+      )}
 
       {/* Join sessions */}
       <div className={styles.sessionsWrapper}>
@@ -128,7 +107,14 @@ function Feed() {
         ) : !filteredFeed.length ? (
           <span className={styles.noSession}>No sessions here...</span>
         ) : (
-          Children.toArray(filteredFeed.map((sess) => <JoinSession session={sess} />))
+          Children.toArray(
+            filteredFeed.map(
+              (sess) =>
+                new Date().getTime() <= new Date(sess.date_and_time).getTime() && (
+                  <JoinSession session={sess} />
+                ),
+            ),
+          )
         )}
       </div>
     </main>

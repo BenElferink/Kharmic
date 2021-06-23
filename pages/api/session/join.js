@@ -57,6 +57,14 @@ export default async (request, response) => {
             });
           }
 
+          // verify not in the past
+          if (new Date(foundSession.date_and_time) < new Date()) {
+            return response.status(400).json({
+              error: true,
+              message: "Cannot join a session in the past",
+            });
+          }
+
           // add account to session-participants
           foundSession.participants.push(auth.uid);
           await foundSession.save();

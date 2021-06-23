@@ -1,6 +1,6 @@
 import styles from "../styles/Feed.module.css";
 import btnStyles from "../styles/Buttons.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import Axios from "../config/axios";
@@ -16,11 +16,22 @@ function JoinSession({ session }) {
   const timeDiff = Date.now() - new Date(session.date_and_time);
   const isHost = session.host === account?._id;
   const isJoined = session.participants.includes(account?._id);
-  const isStart = timeDiff >= 0 && (isJoined || isHost);
+  const isStart = timeDiff >= 0 && timeDiff <= 300000 && (isJoined || isHost);
   const isFull = session.participants.length === 5 && !isJoined && !isHost;
   const notLoggedIn = () => {
     dispatch({ type: "TOAST", payload: { txt: "Please login", type: "error" } });
   };
+
+  const [, setRender] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRender((prev) => (prev += 1));
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   const clickJoin = async () => {
     setLoading(true);
