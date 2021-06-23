@@ -2,12 +2,14 @@ import styles from "../styles/Feed.module.css";
 import btnStyles from "../styles/Buttons.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import moment from "moment";
 import Axios from "../config/axios";
 import { Button, CircularProgress } from "@material-ui/core";
 import PeopleAltRoundedIcon from "@material-ui/icons/PeopleAltRounded";
 
 function JoinSession({ session }) {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { account, token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
@@ -91,7 +93,11 @@ function JoinSession({ session }) {
   };
 
   const clickStart = () => {
-    dispatch({ type: "TOAST", payload: { txt: "Under development", type: "error" } });
+    if (process.env.NODE_ENV === "production") {
+      dispatch({ type: "TOAST", payload: { txt: "Under Development", type: "error" } });
+    } else {
+      router.push(`/session/${session._id}`);
+    }
   };
 
   return (
