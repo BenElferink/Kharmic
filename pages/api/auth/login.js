@@ -24,7 +24,6 @@ export default async (request, response) => {
 
           // verify username exists
           const foundAccount = await Account.findOne({ username }).populate("sessions");
-          console.log(foundAccount);
           if (!foundAccount) {
             return response.status(400).json({
               error: true,
