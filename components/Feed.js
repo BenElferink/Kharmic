@@ -2,7 +2,14 @@ import styles from "../styles/Feed.module.css";
 import { Children, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "../config/axios";
-import { useMediaQuery, CircularProgress, IconButton } from "@material-ui/core";
+import {
+  useMediaQuery,
+  CircularProgress,
+  IconButton,
+  FormControl,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import ArrowBackIosRoundedIcon from "@material-ui/icons/ArrowBackIosRounded";
 import JoinSession from "../components/JoinSession";
@@ -35,6 +42,19 @@ function Feed() {
     fetchFeed();
   }, []);
 
+  const [search, setSearch] = useState(new Date().toDateString());
+
+  const searchOptions = [new Date().toDateString()];
+  feed.forEach((sess) => {
+    const sessDate = new Date(sess.date_and_time).toDateString();
+    if (!searchOptions.includes(sessDate)) searchOptions.push(sessDate);
+  });
+  searchOptions.sort((a, b) => new Date(a) - new Date(b));
+
+  const filteredFeed = feed.filter(
+    (sess) => new Date(sess.date_and_time).toDateString() === search,
+  );
+
   if (isMobile) {
     return (
       <main className={styles.container}>
@@ -62,14 +82,18 @@ function Feed() {
 
         {/* Join sessions */}
         <div className={styles.sessionsWrapper}>
-          <h5 className={styles.title}>Search/Title TBA</h5>
+          <FormControl className={styles.search}>
+            <Select value={search} onChange={(e) => setSearch(e.target.value)}>
+              {Children.toArray(searchOptions.map((x) => <MenuItem value={x}>{x}</MenuItem>))}
+            </Select>
+          </FormControl>
 
           {loading ? (
             <CircularProgress color='secondary' size={69} thickness={2} />
-          ) : !feed.length ? (
+          ) : !filteredFeed.length ? (
             <span className={styles.noSession}>No sessions here...</span>
           ) : (
-            Children.toArray(feed.map((session) => <JoinSession session={session} />))
+            Children.toArray(filteredFeed.map((sess) => <JoinSession session={sess} />))
           )}
         </div>
       </main>
@@ -93,14 +117,18 @@ function Feed() {
 
       {/* Join sessions */}
       <div className={styles.sessionsWrapper}>
-        <h5 className={styles.title}>Search/Title TBA</h5>
+        <FormControl className={styles.search}>
+          <Select value={search} onChange={(e) => setSearch(e.target.value)}>
+            {Children.toArray(searchOptions.map((x) => <MenuItem value={x}>{x}</MenuItem>))}
+          </Select>
+        </FormControl>
 
         {loading ? (
           <CircularProgress color='secondary' size={69} thickness={2} />
-        ) : !feed.length ? (
+        ) : !filteredFeed.length ? (
           <span className={styles.noSession}>No sessions here...</span>
         ) : (
-          Children.toArray(feed.map((session) => <JoinSession session={session} />))
+          Children.toArray(filteredFeed.map((sess) => <JoinSession session={sess} />))
         )}
       </div>
     </main>
