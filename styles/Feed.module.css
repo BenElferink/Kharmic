@@ -8,7 +8,7 @@
 
 .sideElem {
   height: 75vh;
-  width: 95vw;
+  width: 97vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,7 +41,7 @@
   left: 0;
 }
 .open .arrowBtn {
-  right: -7% !important;
+  right: -5% !important;
 }
 
 .sessionsWrapper {
@@ -72,7 +72,7 @@
 }
 
 .session {
-  width: 90vw;
+  width: 95vw;
   margin: 20px auto;
   display: flex;
   align-items: center;
@@ -139,6 +139,6 @@
 @media only screen and (min-width: 1000px) {
   .bookedWrapper,
   .sessionsWrapper {
-    flex: 0.33;
+    flex: 0.4;
   }
 }
