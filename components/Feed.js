@@ -52,7 +52,9 @@ function Feed() {
   searchOptions.sort((a, b) => new Date(a) - new Date(b));
 
   const filteredFeed = feed.filter(
-    (sess) => new Date(sess.date_and_time).toDateString() === search,
+    (sess) =>
+      new Date(sess.date_and_time).toDateString() === search &&
+      new Date(sess.date_and_time).getTime() >= new Date().getTime(),
   );
 
   return (
@@ -107,14 +109,7 @@ function Feed() {
         ) : !filteredFeed.length ? (
           <span className={styles.noSession}>No sessions here...</span>
         ) : (
-          Children.toArray(
-            filteredFeed.map(
-              (sess) =>
-                new Date().getTime() <= new Date(sess.date_and_time).getTime() && (
-                  <JoinSession session={sess} />
-                ),
-            ),
-          )
+          Children.toArray(filteredFeed.map((sess) => <JoinSession session={sess} />))
         )}
       </div>
     </main>
