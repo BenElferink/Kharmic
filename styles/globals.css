@@ -19,6 +19,7 @@
   --blue-darker: rgb(52, 38, 77);
   --blue-darker-ghost: rgba(52, 38, 77, 0.5);
 
+  --gradient-blue-bottom: linear-gradient(to bottom, var(--blue-dark), var(--blue-darker));
   --gradient-blue-right: linear-gradient(to right, var(--blue-dark), var(--blue-darker));
   --gradient-blue-right-2x: linear-gradient(to right, var(--blue-dark) 50%, var(--blue-darker));
   --gradient-blue-left: linear-gradient(to left, var(--blue-dark), var(--blue-darker));
